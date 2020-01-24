@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if((mFirebaseuser)!=null){
                     Toast.makeText(MainActivity.this,"you are logged in" ,Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(MainActivity.this,homeActivity.class));
+                    startActivity(new Intent(MainActivity.this,recyclierview.class));
 
 
                 }
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this,"login error pls login again" ,Toast.LENGTH_SHORT).show();;
                             }
                             else {
-                                startActivity(new Intent(MainActivity.this,homeActivity.class));
+                                startActivity(new Intent(MainActivity.this,recyclierview.class));
                             }
                         }
                     });
