@@ -73,6 +73,8 @@ public class homeActivity extends AppCompatActivity {
 //        ft.add(R.id.fragment_container,m11);
 //
 //        ft.commit();
+        ActivityCompat.requestPermissions(homeActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},requestloation);
+
         ////////////////////////////////////
         tickettx=findViewById(R.id.tx);
         textView=findViewById(R.id.tx1);
@@ -80,7 +82,6 @@ public class homeActivity extends AppCompatActivity {
         Intent i=getIntent();
         String ticketno1= i.getStringExtra("ticket no");
         tickettx.setText(ticketno1);
-        ActivityCompat.requestPermissions(homeActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},requestloation);
 
 
         onstarttravelclick();
@@ -140,6 +141,7 @@ public class homeActivity extends AppCompatActivity {
                 // starttravelimge.setImageResource(images[currentimages]);
                 starttravelimge.setImageResource(images[1]);
                 locationManager= (LocationManager) getSystemService(LOCATION_SERVICE);
+
                 if(!(locationManager.isProviderEnabled(locationManager.GPS_PROVIDER)))
                 {
 
@@ -153,6 +155,17 @@ public class homeActivity extends AppCompatActivity {
                 a1.setValue(longitude);
                 a2=myRef.child("lattitude");
                 a2.setValue(lattitude);
+                String name = "starttravel";
+                FragmentTransaction ft;
+                fm=getSupportFragmentManager();
+                ft=fm.beginTransaction();
+                Bundle b1 = new Bundle();
+                starttaskfrag m23= new starttaskfrag();
+                b1.putString("name",name);
+//                    b1.putString("pwd",pwd);
+                m23.setArguments(b1);
+                ft.add(R.id.fragment_container,m23);
+                ft.commit();
 
                 //////////////////////
 //                fm=getSupportFragmentManager();
@@ -212,10 +225,11 @@ public class homeActivity extends AppCompatActivity {
                     ft=fm.beginTransaction();
                     Bundle b1 = new Bundle();
                     starttaskfrag m13= new starttaskfrag();
+
                     b1.putString("name",name);
 //                    b1.putString("pwd",pwd);
                     m13.setArguments(b1);
-                    ft.add(R.id.fragment_container,new starttaskfrag());
+                    ft.add(R.id.fragment_container,m13);
                     ft.commit();
 //
 //                    Log.d("dontknowitwillowrk", yourFragment.t1

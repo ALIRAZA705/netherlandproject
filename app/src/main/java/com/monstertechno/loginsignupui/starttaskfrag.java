@@ -3,6 +3,7 @@ package com.monstertechno.loginsignupui;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ import java.util.List;
 public class starttaskfrag extends Fragment {
 
  //  public Button starttravel,starttask;
- TextView textView ;
+ TextView textView,tasktext ;
 
     Button start, pause, reset, lap ;
 
@@ -50,7 +51,7 @@ public class starttaskfrag extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_starttaskfrag, container, false);
         textView=  view.findViewById(R.id.textView);
-
+        tasktext=  view.findViewById(R.id.tasktext);
         start = view.findViewById(R.id.button);
         pause = view.findViewById(R.id.button2);
         reset =  view.findViewById(R.id.button3);
@@ -63,14 +64,16 @@ public class starttaskfrag extends Fragment {
                 ListElementsArrayList);
 
         listView.setAdapter(adapter);
-
+        tasktext.setText("You are travelling");
         handler = new Handler() ;
         Bundle b2 = getArguments();
         if(b2!=null) {
 
             String name1 = b2.getString("name");
+            Log.v("aliraza" , "value is" + name1);
             if (name1.compareTo("starttime") == 0)
             {
+                tasktext.setText("You are working");
                 start.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -114,6 +117,65 @@ public class starttaskfrag extends Fragment {
 //                    adapter.notifyDataSetChanged();
                 }
             });
+                lap.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        ListElementsArrayList.add(textView.getText().toString());
+
+                        adapter.notifyDataSetChanged();
+
+                    }
+                });
+//            textView.setText(name);
+
+            }
+           else if (name1.compareTo("starttravel") == 0)
+            {
+                tasktext.setText("You are travelling");
+                start.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        StartTime = SystemClock.uptimeMillis();
+                        handler.postDelayed(runnable, 0);
+
+                        reset.setEnabled(false);
+
+
+                    }
+                });
+                pause.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        TimeBuff += MillisecondTime;
+
+                        handler.removeCallbacks(runnable);
+
+                        reset.setEnabled(true);
+
+                    }
+                });
+                reset.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        MillisecondTime = 0L;
+                        StartTime = 0L;
+                        TimeBuff = 0L;
+                        UpdateTime = 0L;
+                        Seconds = 0;
+                        Minutes = 0;
+                        MilliSeconds = 0;
+
+                        textView.setText("00:00:00");
+
+                        ListElementsArrayList.clear();
+
+//                    adapter.notifyDataSetChanged();
+                    }
+                });
                 lap.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
